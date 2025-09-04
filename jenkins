@@ -1,32 +1,32 @@
-pipeline
-{
-agent any
-stages{
-stage('checkout'){
-steps{
-git branch:'main',url:'https://github.com/teju-0427/GitProject.git'
-}
-}
+pipeline {
+    agent any
 
-stage('Deploy') {
-steps {
-sh '''
-mkdir -p deployed_html
-cp * .html deployed_html/
-'''
-}
-}
-}
-post {
-success {
-publishHTML(target: [
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/teju-0427/GitProject.git'
+            }
+        }
 
-allowMissing: false,
-KeepAll: true,
-reportDir: 'deployes_html',
-reportFiles:'form.html',
-reportName: 'My webpage'
-])
-}
-}
+        stage('Deploy') {
+            steps {
+                sh '''
+                    mkdir -p deployed_html
+                    cp form.html deployed_html/
+                '''
+            }
+        }
+    }
+
+    post {
+        success {
+            publishHTML(target: [
+                allowMissing: false,
+                keepAll: true,
+                reportDir: 'deployed_html',
+                reportFiles: 'form.html',
+                reportName: 'My Webpage'
+            ])
+        }
+    }
 }
