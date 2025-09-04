@@ -7,11 +7,24 @@ steps{
 git branch:'main',url:'https://github.com/teju-0427/GitProject/new/main'
 }
 }
+
 stage('Deploy'){
 steps{
 sh"
-mkdir-p deployed-html
-cp * html deployed-html/
-"'
+mkdir -p deployed_html
+cp * .html deployed_html/
+'''
 }
+}
+}
+post{
+success{
+publishHTML(target: [
+
+allowMissing: false,
+KeepAll: true,
+reportDir: 'deployes_html',
+reportFiles:'form.html',
+reportName: 'My webpage'
+])
 }
