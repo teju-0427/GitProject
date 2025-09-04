@@ -1,0 +1,17 @@
+pipeline
+{
+agent any
+stages{
+stage('checkout'){
+steps{
+git branch:'main',url:'https://github.com/teju-0427/GitProject/new/main'
+}
+}
+stage('Deploy'){
+steps{
+sh"
+mkdir-p deployed-html
+cp * html deployed-html/
+"'
+}
+}
